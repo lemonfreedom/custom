@@ -1,0 +1,56 @@
+.login {
+    .header {
+        color: white;
+        background: url("/admin/images/bg-shapes.svg") #08447a no-repeat center center;
+        background-size: cover;
+
+        .left {
+            .site-name {
+                padding: 1.2rem 0;
+                margin: 0;
+                font-size: 2rem;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .page {
+        .title {
+            font-size: 2rem;
+            font-weight: lighter;
+            color: #064771;
+            margin: 1.6rem 0;
+        }
+    }
+
+    .content {
+        .content-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+
+            .right {
+                .link-tools {
+                    margin-bottom: 2rem;
+                    display: flex;
+                    gap: 1rem;
+                }
+
+                .description {
+                    margin: 0 0 1rem;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .login {
+        .content {
+            .content-body {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    }
+}

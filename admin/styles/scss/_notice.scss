@@ -1,0 +1,33 @@
+.msg {
+    width: 100%;
+    background-color: whitesmoke;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: .2rem;
+
+    ul {
+        padding-left: 1rem;
+        margin: 0;
+
+        li {
+            line-height: 1.6rem;
+        }
+    }
+
+    &.msg-info {
+        background-color: $primary-color;
+    }
+
+    &.msg-warning {
+        background-color: $warning-color;
+    }
+
+    &.msg-error {
+        background-color: $error-color;
+    }
+
+    &.msg-success {
+        background-color: $success-color;
+    }
+}

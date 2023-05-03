@@ -1,0 +1,14 @@
+.footer {
+    margin-top: 2rem;
+    color: #fff;
+    background-color: #064771;
+    text-align: center;
+
+    a {
+        color: #fff;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
