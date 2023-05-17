@@ -1,55 +1,26 @@
 .login {
-    .header {
-        color: white;
-        background: url("/admin/images/bg-shapes.svg") #08447a no-repeat center center;
-        background-size: cover;
+    padding: 10% 1rem 0;
 
-        .left {
-            .site-name {
-                padding: 1.2rem 0;
-                margin: 0;
-                font-size: 2rem;
-                font-weight: bold;
-            }
-        }
-    }
+    .login-wrap {
+        max-width: 400px;
+        margin: 0 auto;
 
-    .page {
         .title {
-            font-size: 2rem;
-            font-weight: lighter;
-            color: #064771;
-            margin: 1.6rem 0;
-        }
-    }
+            display: flex;
+            align-items: baseline;
+            line-height: 2rem;
+            margin-bottom: 2rem;
 
-    .content {
-        .content-body {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-
-            .right {
-                .link-tools {
-                    margin-bottom: 2rem;
-                    display: flex;
-                    gap: 1rem;
-                }
-
-                .description {
-                    margin: 0 0 1rem;
-                }
+            h1 {
+                font-size: 1.5rem;
+                color: $primary-color;
+                ;
+                margin: 0 .5rem 0 0;
             }
-        }
-    }
-}
 
-@media (max-width: 900px) {
-    .login {
-        .content {
-            .content-body {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+            span {
+                color: #888;
+                margin-right: .5rem;
             }
         }
     }

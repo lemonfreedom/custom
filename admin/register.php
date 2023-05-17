@@ -1,42 +1,45 @@
 <?php require __DIR__ . '/modules/header.php'; ?>
 <div class="login">
-    <div class="header">
-        <div class="container">
-            <div class="left">
-                <div class="site-name">Custom</div>
-            </div>
+    <div class="login-wrap">
+        <div class="title">
+            <h1><?= _t('用户注册') ?></h1>
+            <span><?= _t('此页面受限') ?></span>
+            <a href="<?= base_url('/admin/login.php') ?>"><?= _t('立即登录') ?></a>
         </div>
-    </div>
-    <div class="page">
-        <div class="container">
-            <h1 class="title">账号注册</h1>
-            <div id="content" class="content">
-                <div class="content-body">
-                    <form class="left" action="<?= site_url('/user/register') ?>" method="POST">
-                        <div class="field">
-                            <label class="label" for="">用户名</label>
-                            <input class="input" name="username" type="text" autofocus>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="">邮箱</label>
-                            <input class="input" name="email" type="email">
-                        </div>
-                        <div class="field">
-                            <label class="label" for="">密码</label>
-                            <input class="input" name="password" type="password">
-                        </div>
-                        <button class="btn btn-primary btn-full" type="submit"><?= _t('注册') ?></button>
-                    </form>
-                    <div class="right">
-                        <p class="description">Custom 是一款极简博客程序</p>
-                        <div class="link-tools">
-                            <a href="/">返回首页</a>
-                            <a href="/admin/login.php">登陆账号</a>
-                        </div>
-                    </div>
+        <form action="<?= site_url('/user/register') ?>" method="POST">
+            <div class="field">
+                <label class="label" for=""><?= _t('邮件地址') ?></label>
+                <input class="input" name="account" type="text" autofocus>
+            </div>
+            <div class="field">
+                <label class="label" for=""><?= _t('验证码') ?></label>
+                <div class="input-group">
+                    <input class="input" name="account" type="text" autofocus>
+                    <button class="btn"><?= _t('发送验证码') ?></button>
                 </div>
             </div>
-        </div>
+            <div class="field">
+                <label class="label" for=""><?= _t('密码') ?></label>
+                <input class="input" name="password" type="password">
+            </div>
+            <div class="field">
+                <label class="label" for=""><?= _t('确认密码') ?></label>
+                <input class="input" name="password" type="password">
+            </div>
+            <button class="btn btn-primary" type="submit"><?= _t('注册') ?></button>
+        </form>
     </div>
 </div>
-<?php require __DIR__ . '/modules/footer.php'; ?>
+<script>
+    document.querySelector('button[type="submit"]').addEventListener('click', function(e) {
+        e.preventDefault();
+        const formEl = document.querySelector('form');
+        const formData = new FormData(formEl);
+        // 记住账号
+        if (formData.get('rememberme')) {
+            window.localStorage.setItem('login_email', formData.setItem('email'))
+        }
+        formEl.submit()
+    });
+</script>
+<?php require __DIR__ . '/modules/end.php'; ?>

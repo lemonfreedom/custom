@@ -3,13 +3,34 @@
 
     .label {
         display: inline-block;
-        margin: 0 0 .3rem;
+        margin-bottom: .5rem;
+        font-weight: bold;
     }
 
     .help {
         color: #888;
         display: inline-block;
-        margin: .3rem 0 0;
+        margin-top: .5rem;
+    }
+
+    .input-group {
+        display: flex;
+
+        input {
+            margin-right: .3rem;
+        }
+    }
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+
+    input {
+        margin-right: .3rem;
     }
 }
 
@@ -19,17 +40,22 @@
     width: 100%;
     box-sizing: border-box;
     border: 1px solid gainsboro;
-    border-radius: .2rem;
+    border-radius: .3rem;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     outline: none;
+    color: #666;
+    transition: all .2s ease;
+    appearance: none;
 
     &:focus {
         border-color: lighten($primary-color, 20%);
+        box-shadow: 0 0 5px lighten($primary-color, 50%);
     }
 }
 
 .input {
-    height: 2.4rem;
-    line-height: 2.4rem;
+    height: 2.2rem;
+    line-height: 2.2rem;
     padding: 0 .8rem;
 }
 
@@ -39,33 +65,32 @@
 }
 
 .select {
-    height: 2.4rem;
+    height: 2.2rem;
     padding: 0 .8rem;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 0.8rem center;
     background-size: 16px 12px;
-    appearance: none;
 }
 
 .btn {
-    height: 2.4rem;
+    box-sizing: border-box;
+    height: 2.2rem;
+    line-height: 1;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     outline: none;
     padding: 0 .8rem;
-    box-sizing: border-box;
-    border: 0;
-    border-radius: .2rem;
-    display: flex;
-    align-items: center;
-    gap: .2rem;
-    font-weight: bold;
-    color: #333;
-    background-color: #e6e6e6;
+    border-radius: .3rem;
+    color: #555;
+    border: 1px solid gainsboro;
+    background-color: transparent;
     cursor: pointer;
+    flex: none;
+    appearance: none;
 
     &:hover,
     &:focus {
-        background-color: #dfdfdf;
+        background-color: #ebebeb;
     }
 
     &.btn-full {
@@ -75,11 +100,12 @@
 
     &.btn-primary {
         color: #fff;
-        background-color: $primary-color;
+        border-color: lighten($primary-color, 10%);
+        background-color: lighten($primary-color, 10%);
 
         &:hover,
         &:focus {
-            background-color: darken($primary-color, 6%);
+            background-color: $primary-color;
         }
     }
 }

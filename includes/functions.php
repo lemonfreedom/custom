@@ -106,7 +106,7 @@ function format_time($time, $friendly = false)
  */
 function site_url($uri = '')
 {
-    return \Custom\Request::instance()->getUrlPrefix() . '/index.php/' . $uri;
+    return \Custom\Request::instance()->getUrlPrefix() . '/index.php' . $uri;
 }
 
 /**
@@ -117,5 +117,5 @@ function site_url($uri = '')
  */
 function base_url($uri = '')
 {
-    return \Custom\Request::instance()->getUrlPrefix() . '/' . $uri;
+    return \Custom\Request::instance()->getUrlPrefix() . $uri;
 }
