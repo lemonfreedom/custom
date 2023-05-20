@@ -1,18 +1,18 @@
-body {
-    background-color: #f5f7fb;
-}
-
-.bi::before,
-[class^="bi-"]::before,
-[class*=" bi-"]::before {
-    display: inline-block;
-    font-family: bootstrap-icons !important;
-    font-style: normal;
-    font-weight: normal !important;
-    font-variant: normal;
-    text-transform: none;
+.bi {
     line-height: 1;
     vertical-align: -.125em;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+}
+
+.nav-link:focus-visible {
+    box-shadow: none;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .main {
+        flex: 1;
+    }
 }

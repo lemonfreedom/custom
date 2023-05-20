@@ -80,27 +80,41 @@ class Plugin
     /**
      * 启用插件
      *
-     * @param string $class
-     * @param array $settings 插件设置
+     * @param string $plugin
+     * @param array $config 插件设置
      * @return void
      */
-    public static function activation($class, $settings)
+    public static function activation($plugin, $config)
     {
-        self::$plugins[$class]['settings'] = $settings;
-        self::$plugins[$class]['handles'] = self::$tmp;
+        self::$plugins[$plugin]['config'] = $config;
+        self::$plugins[$plugin]['handles'] = self::$tmp;
         self::$tmp = [];
     }
 
     /**
      * 禁用插件
      *
-     * @param string $class
+     * @param string $plugin
      * @return void
      */
-    public static function deactivation($class)
+    public static function deactivation($plugin)
     {
-        if (isset(self::$plugins[$class])) {
-            unset(self::$plugins[$class]);
+        if (isset(self::$plugins[$plugin])) {
+            unset(self::$plugins[$plugin]);
+        }
+    }
+
+    /**
+     * 更新配置
+     *
+     * @param string $plugin
+     * @param array $config 插件配置
+     * @return void
+     */
+    public static function updateConfig($plugin, $config)
+    {
+        foreach (array_keys(self::$plugins[$plugin]['config']) as $key) {
+            self::$plugins[$plugin]['config'][$key] = $config[$key] ?? '';
         }
     }
 
@@ -131,7 +145,9 @@ class Plugin
 
         if (isset(self::$handles[$name])) {
             foreach (self::$handles[$name] as $callback) {
-                call_user_func_array($callback, [$args[0]]);
+                preg_match('/Plugins\\\(.*)\\\Main/', $callback, $matches);
+                $plugin = $matches[1];
+                call_user_func_array($callback, [$args, self::$plugins[$plugin]['config']]);
             }
         }
     }

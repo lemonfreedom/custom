@@ -2,6 +2,8 @@
 
 namespace Custom;
 
+use Helpers\Medoo;
+
 class Fragment
 {
     public function __call($name, $arguments)
@@ -29,7 +31,7 @@ class Widget
     public $response;
 
     /**
-     * @var Db
+     * @var Medoo
      */
     public $db;
 

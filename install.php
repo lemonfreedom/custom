@@ -24,7 +24,6 @@ $db->drop('options');
 // 创建用户表
 $db->create('users', [
     'uid' => ['INT', 'UNSIGNED', 'NOT NULL', 'AUTO_INCREMENT', 'PRIMARY KEY'],
-    'username' => ['VARCHAR(30)', 'NOT NULL'],
     'email' => ['VARCHAR(100)', 'NOT NULL'],
     'password' => ['VARCHAR(255)', 'NOT NULL'],
     'group' => ['VARCHAR(16)', 'NOT NULL'],
@@ -32,9 +31,9 @@ $db->create('users', [
     'token' => ['VARCHAR(30)', 'NOT NULL'],
 ]);
 
+// 创建初始化
 $db->insert('users', [
-    'username' => 'admin',
-    'email' => '226582@qq.com',
+    'email' => 'admin@admin.com',
     'password' => '$2y$10$nFjKlIMzsd8xUxSwX70R4OLt.atdf4wykN.9Z.7gzasKr0rDIjnPy',
     'group' => 'administrator',
     'created' => time(),
@@ -59,9 +58,12 @@ $db->create('options', [
 
 // 插入选项数据
 $db->insert('options', [
-    ['name' => 'language', 'value' => 'Chinese'],
-    ['name' => 'plugin', 'value' => 'a:0:{}'],
+    ['name' => 'title', 'value' => 'Custom'],
     ['name' => 'description', 'value' => 'Custom 是一款功能精简，但灵活度极高的 BBS 程序。'],
+    ['name' => 'language', 'value' => 'Chinese'],
+    ['name' => 'allowRegister', 'value' => '1'],
+    ['name' => 'plugin', 'value' => 'a:0:{}'],
+    ['name' => 'theme', 'value' => 'a:0:{}'],
 ]);
 
 $configText = <<<EOT

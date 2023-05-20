@@ -7,5 +7,5 @@
     <title>Custom</title>
 </head>
 
-<body>
+<body style="background-color: <?= $config['backgroundColor'] ?>;">
     <main class="main">

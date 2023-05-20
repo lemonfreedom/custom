@@ -13,6 +13,7 @@ class Base extends Widget
      */
     public function need($file)
     {
-        require ROOT_DIR . 'content/themes/default/' . $file . '.php';
+        $config = Option::alloc()->get('themeConfig');
+        require ROOT_DIR . 'content/themes/' . Option::alloc()->get('themeName') . '/' . $file . '.php';
     }
 }

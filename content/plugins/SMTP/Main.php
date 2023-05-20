@@ -1,6 +1,6 @@
 <?php
 
-namespace Plugins\HelloWorld;
+namespace Plugins\SMTP;
 
 use Helpers\Renderer;
 
@@ -19,11 +19,12 @@ class Main
      */
     public static function activation()
     {
-        \Custom\Plugin::factory('admin/modules/footer.php')->end = __CLASS__ . '::render';
+        \Custom\Plugin::factory('admin/setting.php')->tab = __CLASS__ . '::renderTab';
+        \Custom\Plugin::factory('admin/setting.php')->content = __CLASS__ . '::renderContent';
     }
 
     /**
-     * 卸载回调方法
+     * 卸载回调
      *
      * @return void
      */
@@ -32,7 +33,7 @@ class Main
     }
 
     /**
-     * 插件配置
+     * 插件设置
      *
      * @param Renderer $renderer 渲染器
      * @return void
@@ -46,15 +47,13 @@ class Main
         });
     }
 
-    /**
-     * 插件方法
-     *
-     * @param array $params 页面参数
-     * @param array $config 插件配置
-     * @return void
-     */
-    public static function render($params, $config)
+    public static function renderTab($params, $config)
     {
-        echo $config['message'];
+        include __DIR__ . '/views/tab.php';
+    }
+
+    public static function renderContent($params, $config)
+    {
+        include __DIR__ . '/views/content.php';
     }
 }

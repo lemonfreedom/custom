@@ -24,6 +24,9 @@ class Option extends Widget
                 $this->options[$index]['value'] = unserialize($this->options[$index]['value']);
             }
         }
+
+        $this->options[] = ['name' => 'themeName', 'value' => $this->get('theme')['name']];
+        $this->options[] = ['name' => 'themeConfig', 'value' => $this->get('theme')['config']];
     }
 
     /**
@@ -69,24 +72,27 @@ class Option extends Widget
     }
 
     /**
-     * 更新一般配置
+     * 更新站点配置
      *
      * @return void
      */
-    private function updateGeneral()
+    private function updateSetting()
     {
         User::alloc()->pass('administrator');
 
         $data = $this->request->post();
 
+        $this->set('title', $data['title']);
+        $this->set('description', $data['description']);
         $this->set('language', $data['language']);
+        $this->set('allowRegister', $data['allowRegister'] ?? '0');
 
-        Notice::set(_t('保存成功'), 'success');
+        Notice::set([_t('保存成功')], 'success');
         $this->response->goBack();
     }
 
     public function action()
     {
-        $this->on($this->params(0) === 'update-general')->updateGeneral();
+        $this->on($this->params(0) === 'update-setting')->updateSetting();
     }
 }

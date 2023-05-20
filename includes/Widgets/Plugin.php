@@ -35,22 +35,21 @@ class Plugin extends Widget
         $result = [];
 
         foreach ($dirs as $dir) {
-            $info = [];
+            $name = basename($dir);
+            $class = '\\Plugins\\' . $name . '\\Main';
 
-            $info['name'] = basename($dir);
-
-            $class = '\\Plugins\\' . $info['name'] . '\\Main';
             if (class_exists($class)) {
-                $i = $class::info();
-
-                $info['url'] = $i['url'] ?? '';
-                $info['description'] = $i['description'] ?? '';
-                $info['version'] = $i['version'] ?? '';
-                $info['author'] = $i['author'] ?? '';
-                $info['author_url'] = $i['author_url'] ?? '';
-                $info['activated'] = array_key_exists($class, $this->plugins);
-
-                $result[] = $info;
+                $activated = array_key_exists($name, $this->plugins);
+                $result[] = [
+                    'name' => $name,
+                    'url' => $class::$url ?? '',
+                    'description' => $class::$description ?? '',
+                    'version' => $class::$version ?? '',
+                    'author' => $class::$author ?? '',
+                    'authorUrl' => $class::$authorUrl ?? '',
+                    'activated' => $activated,
+                    'hasConfig' =>  $activated && count($this->plugins[$name]['config']) > 0,
+                ];
             }
         }
 
@@ -66,31 +65,35 @@ class Plugin extends Widget
     {
         User::alloc()->pass('administrator');
 
-        $plugin = $this->request->get('plugin', '');
+        $name = $this->request->get('name', '');
 
-        $class = '\\Plugins\\' . $plugin . '\\Main';
+        if (array_key_exists($name, $this->plugins)) {
+            Notice::set(['请勿重复安装'], 'warning');
+            $this->response->redirect('/admin/plugin.php');
+        }
+
+        $class = '\\Plugins\\' . $name . '\\Main';
 
         if (!class_exists($class) || !method_exists($class, 'activation')) {
-            Notice::set('启用失败', 'warning');
-            $this->response->goBack('/admin/plugins.php');
+            Notice::set(['安装失败'], 'warning');
+            $this->response->goBack('/admin/plugin.php');
         }
 
         // 获取插件设置
-        if (class_exists($class, 'setting')) {
+        if (class_exists($class, 'config')) {
             $renderer = new Renderer();
-            call_user_func([$class, 'setting'], $renderer);
+            call_user_func([$class, 'config'], $renderer);
 
-            $settings = $renderer->getValues();
+            $config = $renderer->getValues();
         }
 
         // 激活插件
         call_user_func([$class, 'activation']);
-
-        CustomPlugin::activation($class, $settings);
+        CustomPlugin::activation($name, $config);
 
         Option::alloc()->set('plugin', serialize(CustomPlugin::export()));
 
-        Notice::set('启用成功', 'success');
+        Notice::set(['安装成功'], 'success');
         $this->response->goBack();
     }
 
@@ -103,19 +106,78 @@ class Plugin extends Widget
     {
         User::alloc()->pass('administrator');
 
-        $plugin = $this->request->get('plugin', '');
+        $name = $this->request->get('name', '');
 
-        $class = '\\Plugins\\' . $plugin . '\\Main';
+        if (!array_key_exists($name, $this->plugins)) {
+            Notice::set(['请勿重复卸载'], 'warning');
+            $this->response->redirect('/admin/plugin.php');
+        }
 
+        $class = '\\Plugins\\' . $name . '\\Main';
+
+        // 执行卸载回调
         if (class_exists($class) && method_exists($class, 'deactivation')) {
             call_user_func([$class, 'deactivation']);
         }
 
-        CustomPlugin::deactivation($class);
+        CustomPlugin::deactivation($name);
 
         Option::alloc()->set('plugin', serialize(CustomPlugin::export()));
 
-        Notice::set('禁用成功', 'success');
+        Notice::set(['卸载成功'], 'success');
+        $this->response->goBack();
+    }
+
+    /**
+     * 插件配置
+     *
+     * @return void
+     */
+    public function config()
+    {
+        User::alloc()->pass('administrator');
+
+        $name = $this->request->get('name', '');
+        $class = '\\Plugins\\' . $name  . '\\Main';
+        if (!array_key_exists($name, $this->plugins)) {
+            Notice::set(['插件未启用'], 'warning');
+            $this->response->redirect('/admin/plugin.php');
+        }
+
+        // 判断插件是否具备配置功能
+        if ([] === $this->plugins[$name]['config']) {
+            Notice::set(['配置功能不存在'], 'warning');
+            $this->response->redirect('/admin/plugin.php');
+        }
+
+        $renderer = new Renderer();
+        call_user_func([$class, 'config'], $renderer);
+        $renderer->render($this->plugins[$name]['config']);
+    }
+
+    public function updateConfig()
+    {
+        User::alloc()->pass('administrator');
+
+        $name = $this->request->post('name', '');
+
+        if (null === $name) {
+            Notice::set(['插件名不能为空'], 'warning');
+            $this->response->redirect('/admin/plugin.php');
+        }
+
+        if (!array_key_exists($name, $this->plugins)) {
+            Notice::set(['插件未启用'], 'warning');
+            $this->response->redirect('/admin/plugin.php');
+        }
+
+        $data = $this->request->post();
+
+        CustomPlugin::updateConfig($name, $data);
+
+        Option::alloc()->set('plugin', serialize(CustomPlugin::export()));
+
+        Notice::set(['更新成功'], 'success');
         $this->response->goBack();
     }
 
@@ -123,5 +185,8 @@ class Plugin extends Widget
     {
         $this->on($this->params(0) === 'enable')->enable();
         $this->on($this->params(0) === 'disable')->disable();
+
+        // 更新插件配置
+        $this->on($this->params(0) === 'update-config')->updateConfig();
     }
 }

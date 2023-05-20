@@ -1,1 +1,1 @@
-body{background-color:#f5f7fb}.bi::before,[class^=bi-]::before,[class*=" bi-"]::before{display:inline-block;font-family:bootstrap-icons !important;font-style:normal;font-weight:normal !important;font-variant:normal;text-transform:none;line-height:1;vertical-align:-0.125em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.bi{line-height:1;vertical-align:-0.125em}.nav-link:focus-visible{box-shadow:none}body{display:flex;flex-direction:column;height:100vh}body .main{flex:1}.login{width:100%;max-width:24rem;padding:0 1.5rem}

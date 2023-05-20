@@ -1,5 +1,5 @@
 <?php require __DIR__ . '/modules/header.php'; ?>
-<div class="container login">
+<div class="main container login">
     <div class="row">
         <div class=" col-12 col-lg-4 offset-lg-4">
             <h3 class="my-4 text-center">

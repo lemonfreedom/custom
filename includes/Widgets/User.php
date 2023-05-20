@@ -116,7 +116,7 @@ class User extends Widget
     public function getLoginUserinfo()
     {
         if ($this->loginUserinfo === null) {
-            $this->loginUserinfo = $this->db->get('users', ['uid', 'username', 'email', 'group', 'created'], ['uid' => Cookie::get('uid', '')]);
+            $this->loginUserinfo = $this->db->get('users', ['uid', 'email', 'group', 'created'], ['uid' => Cookie::get('uid', '')]);
         }
 
         return $this->loginUserinfo;
@@ -130,26 +130,21 @@ class User extends Widget
     private function login()
     {
         $data = $this->request->post();
-        $v = new Validator($data, [
-            'account' => [['type' => 'required', 'message' => '用户名或邮箱不能为空']],
+        $valid = new Validator($data, [
+            'email' => [['type' => 'required', 'message' => '邮箱不能为空']],
             'password' => [['type' => 'required', 'message' => '密码不能为空']],
         ]);
-        if (!$v->run()) {
+        if (!$valid->run()) {
             Notice::set(array_map(function ($value) {
                 return $value['message'];
-            }, $v->result), 'warning');
+            }, $valid->result), 'warning');
             $this->response->goBack();
         }
 
-        $result = $this->db->get('users', ['uid', 'password'], [
-            'OR' => [
-                'username' => $data['account'],
-                'email' => $data['account'],
-            ],
-        ]);
+        $result = $this->db->get('users', ['uid', 'password'], ['email' => $data['email']]);
 
         if (empty($result)) {
-            Notice::set('用户不存在', 'warning');
+            Notice::set(['用户不存在'], 'warning');
             $this->response->goBack();
         }
 
@@ -162,7 +157,7 @@ class User extends Widget
 
             $this->response->goBack('/admin', true);
         } else {
-            Notice::set('密码错误', 'warning');
+            Notice::set(['密码错误'], 'warning');
             $this->response->goBack();
         }
     }
