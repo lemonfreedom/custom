@@ -17,7 +17,7 @@ class Language extends Widget
 
         $dirs = glob(ROOT_DIR . 'content/languages/*');
 
-        $result = [['name' => '简体中文', 'value' => 'Chinese']];
+        $result = [];
 
         foreach ($dirs as $dir) {
             $info = [];
@@ -27,7 +27,6 @@ class Language extends Widget
             $class = '\\Languages\\' . $info['value'];
             if (class_exists($class)) {
                 $info['name'] = $class::$name;
-
                 $result[] = $info;
             }
         }

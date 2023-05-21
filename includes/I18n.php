@@ -5,14 +5,14 @@ namespace Custom;
 class I18n
 {
     /**
-     * @var null|array
+     * @var array
      */
     private static $messages = null;
 
     /**
      * 初始化
      *
-     * @param string $locale 语言
+     * @param string $locale
      * @return void
      */
     public static function init($locale)
@@ -22,6 +22,8 @@ class I18n
 
             if (class_exists($class)) {
                 self::$messages = $class::$messages;
+            } else {
+                self::$messages = [];
             }
         }
     }
@@ -34,6 +36,6 @@ class I18n
      */
     public static function translate($text)
     {
-        return self::$messages !== null ? (array_column(self::$messages, 'value', 'id')[$text] ?? $text) : $text;
+        return self::$messages[$text] ?? $text;
     }
 }

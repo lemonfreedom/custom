@@ -21,9 +21,10 @@
                         <div class="my-2">
                             <div class="btn-group">
                                 <?php if ($item['hasConfig']) : ?>
-                                    <a href="<?= base_url('/admin/plugin-setting.php?name=' . $item['name']) ?>" class="btn btn-primary"><?= _t('插件设置') ?></a>
+                                    <a href="<?= base_url('/admin/plugin-config.php?name=' . $item['name']) ?>" class="btn btn-primary"><?= _t('插件设置') ?></a>
                                 <?php endif; ?>
                                 <?php if ($item['activated']) : ?>
+                                    <a class="btn btn-success" href="<?= site_url('/plugin/reset?name=' . $item['name']) ?>"><?= _t('重新安装') ?></a>
                                     <a class="btn btn-danger" href="<?= site_url('/plugin/disable?name=' . $item['name']) ?>"><?= _t('卸载') ?></a>
                                 <?php else : ?>
                                     <a class="btn btn-success" href="<?= site_url('/plugin/enable?name=' . $item['name']) ?>"><?= _t('安装') ?></a>

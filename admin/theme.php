@@ -21,12 +21,12 @@
                         <div class="my-2">
                             <div class="btn-group">
                                 <?php if ($item['hasConfig']) : ?>
-                                    <a href="<?= base_url('/admin/theme-setting.php?name=' . $item['name']) ?>" class="btn btn-primary"><?= _t('主题设置') ?></a>
+                                    <a href="<?= base_url('/admin/theme-config.php?name=' . $item['name']) ?>" class="btn btn-primary"><?= _t('主题设置') ?></a>
                                 <?php endif; ?>
                                 <?php if (!$item['activated']) : ?>
                                     <a class="btn btn-success" href="<?= site_url('/theme/enable?name=' . $item['name']) ?>"><?= _t('启用') ?></a>
                                 <?php else : ?>
-                                    <a class="btn btn-danger" href="<?= site_url('/theme/enable?name=' . $item['name']) ?>"><?= _t('重置') ?></a>
+                                    <a class="btn btn-danger" href="<?= site_url('/theme/reset?name=' . $item['name']) ?>"><?= _t('重新启用') ?></a>
                                 <?php endif; ?>
                             </div>
                         </div>

@@ -13,6 +13,15 @@ class Main
     public static $authorUrl = "";
 
     /**
+     * 启用主题
+     *
+     * @return void
+     */
+    public static function activation()
+    {
+    }
+
+    /**
      * 主题配置
      *
      * @param Renderer $renderer 渲染器

@@ -5,17 +5,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <hr class="d-lg-none my-2">
-                <li class="nav-item">
-                    <a class="nav-link active" href="<?= base_url('/admin/index.php') ?>">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-speedometer2" viewBox="0 0 16 16">
-                            <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z" />
-                            <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z" />
-                        </svg>
-                        <span>仪表盘</span>
-                    </a>
-                </li>
+            <hr class="d-lg-none my-2">
+            <ul class="navbar-nav me-auto mb-lg-0">
+                <?php \Custom\Plugin::factory('admin/navbar.php')->navBegin() ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
@@ -28,6 +20,7 @@
                         <li><a class="dropdown-item rounded" href="#">评论管理</a></li>
                         <li><a class="dropdown-item rounded" href="#">分类管理</a></li>
                         <li><a class="dropdown-item rounded" href="#">文件管理</a></li>
+                        <?php \Custom\Plugin::factory('admin/navbar.php')->navContentItem() ?>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -43,8 +36,10 @@
                         <li><a class="dropdown-item rounded" href="#">用户管理</a></li>
                         <li><a class="dropdown-item rounded" href="#">角色管理</a></li>
                         <li><a class="dropdown-item rounded" href="#">权限管理</a></li>
+                        <?php \Custom\Plugin::factory('admin/navbar.php')->navUserItem() ?>
                     </ul>
                 </li>
+                <?php \Custom\Plugin::factory('admin/navbar.php')->navEnd() ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
@@ -54,17 +49,27 @@
                     </a>
                     <ul class="dropdown-menu shadow-sm p-2">
                         <li><a class="dropdown-item rounded" href="<?= base_url('/admin/setting.php'); ?>">站点设置</a></li>
-                        <li><a class="dropdown-item rounded" href="<?= base_url('/admin/theme.php') ?>">主题管理</a></li>
+                        <li><a class="dropdown-item rounded" href="<?= base_url('/admin/theme.php') ?>">前台管理</a></li>
                         <li><a class="dropdown-item rounded" href="<?= base_url('/admin/plugin.php') ?>">插件管理</a></li>
+                        <?php \Custom\Plugin::factory('admin/navbar.php')->navSystemItem() ?>
                     </ul>
                 </li>
             </ul>
-            <hr class="d-lg-none my-2">
             <ul class="navbar-nav">
+                <?php \Custom\Plugin::factory('admin/navbar.php')->rightNavBegin() ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('/') ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-houses-fill" viewBox="0 0 16 16">
+                            <path d="M7.207 1a1 1 0 0 0-1.414 0L.146 6.646a.5.5 0 0 0 .708.708L1 7.207V12.5A1.5 1.5 0 0 0 2.5 14h.55a2.51 2.51 0 0 1-.05-.5V9.415a1.5 1.5 0 0 1-.56-2.475l5.353-5.354L7.207 1Z" />
+                            <path d="M8.793 2a1 1 0 0 1 1.414 0L12 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l1.854 1.853a.5.5 0 0 1-.708.708L15 8.207V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 13.5V8.207l-.146.147a.5.5 0 1 1-.708-.708L8.793 2Z" />
+                        </svg>
+                        <span>返回前台</span>
+                    </a>
+                </li>
+                <?php \Custom\Plugin::factory('admin/navbar.php')->rightNavEnd() ?>
                 <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="theme"></button>
                 </li>
-                <hr class="d-lg-none my-2">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
@@ -74,6 +79,7 @@
                     </a>
                     <ul class="dropdown-menu shadow-sm p-2">
                         <li><a class="dropdown-item rounded" href="<?= site_url('/user/logout') ?>">退出登录</a></li>
+                        <?php \Custom\Plugin::factory('admin/navbar.php')->rightNavUserItem() ?>
                     </ul>
                 </li>
             </ul>

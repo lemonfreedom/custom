@@ -61,22 +61,27 @@ class Plugin extends Widget
      *
      * @return void
      */
-    private function enable()
+    private function enable($reset = false)
     {
         User::alloc()->pass('administrator');
 
         $name = $this->request->get('name', '');
 
-        if (array_key_exists($name, $this->plugins)) {
+        if (!$reset && array_key_exists($name, $this->plugins)) {
             Notice::set(['请勿重复安装'], 'warning');
-            $this->response->redirect('/admin/plugin.php');
+            $this->response->goBack();
         }
 
         $class = '\\Plugins\\' . $name . '\\Main';
 
         if (!class_exists($class) || !method_exists($class, 'activation')) {
-            Notice::set(['安装失败'], 'warning');
-            $this->response->goBack('/admin/plugin.php');
+            if ($reset) {
+                Notice::set(['重新安装失败'], 'warning');
+            } else {
+                Notice::set(['安装失败'], 'warning');
+            }
+
+            $this->response->goBack();
         }
 
         // 获取插件设置
@@ -93,7 +98,11 @@ class Plugin extends Widget
 
         Option::alloc()->set('plugin', serialize(CustomPlugin::export()));
 
-        Notice::set(['安装成功'], 'success');
+        if ($reset) {
+            Notice::set(['重新安装成功'], 'success');
+        } else {
+            Notice::set(['安装成功'], 'success');
+        }
         $this->response->goBack();
     }
 
@@ -110,7 +119,7 @@ class Plugin extends Widget
 
         if (!array_key_exists($name, $this->plugins)) {
             Notice::set(['请勿重复卸载'], 'warning');
-            $this->response->redirect('/admin/plugin.php');
+            $this->response->goBack();
         }
 
         $class = '\\Plugins\\' . $name . '\\Main';
@@ -141,13 +150,13 @@ class Plugin extends Widget
         $class = '\\Plugins\\' . $name  . '\\Main';
         if (!array_key_exists($name, $this->plugins)) {
             Notice::set(['插件未启用'], 'warning');
-            $this->response->redirect('/admin/plugin.php');
+            $this->response->goBack();
         }
 
         // 判断插件是否具备配置功能
         if ([] === $this->plugins[$name]['config']) {
             Notice::set(['配置功能不存在'], 'warning');
-            $this->response->redirect('/admin/plugin.php');
+            $this->response->goBack();
         }
 
         $renderer = new Renderer();
@@ -163,12 +172,12 @@ class Plugin extends Widget
 
         if (null === $name) {
             Notice::set(['插件名不能为空'], 'warning');
-            $this->response->redirect('/admin/plugin.php');
+            $this->response->goBack();
         }
 
         if (!array_key_exists($name, $this->plugins)) {
             Notice::set(['插件未启用'], 'warning');
-            $this->response->redirect('/admin/plugin.php');
+            $this->response->goBack();
         }
 
         $data = $this->request->post();
@@ -183,9 +192,11 @@ class Plugin extends Widget
 
     public function action()
     {
+        // 安装插件
         $this->on($this->params(0) === 'enable')->enable();
+        $this->on($this->params(0) === 'reset')->enable(true);
+        // 卸载插件
         $this->on($this->params(0) === 'disable')->disable();
-
         // 更新插件配置
         $this->on($this->params(0) === 'update-config')->updateConfig();
     }

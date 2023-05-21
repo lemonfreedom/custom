@@ -9,7 +9,7 @@ class Notice
     /**
      * 设置通知
      *
-     * @param string $content 通知内容
+     * @param array $content 通知内容
      * @param string $type 通知类型
      */
     public static function set($content, $type = 'info')

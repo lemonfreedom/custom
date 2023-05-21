@@ -1,37 +1,35 @@
 <?php require __DIR__ . '/modules/header.php'; ?>
-<div class="main container login">
-    <div class="row">
-        <div class=" col-12 col-lg-4 offset-lg-4">
-            <h3 class="my-4 text-center">
-                <?= _t('用户注册') ?>
-            </h3>
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <form action="<?= site_url('/user/login') ?>" method="POST">
-                        <div class="mb-3">
-                            <label class="form-label" for="">电子邮箱地址</label>
-                            <input class="form-control mb-2" name="account" type="text" autofocus placeholder="电子邮箱地址">
-                            <div class="input-group">
-                                <input class="form-control" name="code" type="text" placeholder="邮箱验证码">
-                                <button class="btn btn-outline-secondary">发送验证码</button>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="">账户安全</label>
-                            <input class="form-control mb-2" name="password" type="password" placeholder="密码">
-                            <input class="form-control" name="password" type="password" placeholder="确认密码">
-                        </div>
-                        <div class="mb-2 d-grid gap-2">
-                            <button class="btn btn-primary black" type="submit"><?= _t('注册') ?></button>
-                        </div>
-                    </form>
+<div class="main login mx-auto mt-5">
+    <h2 class="my-4 text-center">
+        <?= _t('用户注册') ?>
+    </h2>
+    <div class="card shadow-sm mx-auto">
+        <div class="card-body">
+            <form action="<?= site_url('/user/login') ?>" method="POST">
+                <div class="mb-3">
+                    <label class="form-label" for="">邮箱</label>
+                    <input class="form-control mb-2" name="account" type="text" autofocus placeholder="邮箱">
+                    <div class="input-group">
+                        <input class="form-control" name="code" type="text" placeholder="验证码">
+                        <button class="btn btn-outline-secondary">发送验证码</button>
+                    </div>
                 </div>
-            </div>
-            <div class="my-3 text-center">
-                <span class="text-secondary">已有账号，</span>
-                <a href="<?= base_url('/admin/login.php') ?>">立即登录</a>
-            </div>
-            <!-- <div class="mb-2 d-grid gap-2">
+                <div class="mb-3">
+                    <label class="form-label" for="">账户安全</label>
+                    <input class="form-control mb-2" name="password" type="password" placeholder="密码">
+                    <input class="form-control" name="password" type="password" placeholder="确认密码">
+                </div>
+                <div class="mb-2 d-grid gap-2">
+                    <button class="btn btn-primary black" type="submit"><?= _t('注册') ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="my-3 text-center">
+        <span class="text-secondary">已有账号，</span>
+        <a href="<?= base_url('/admin/login.php') ?>">立即登录</a>
+    </div>
+    <!-- <div class="mb-2 d-grid gap-2">
                 <button class="btn btn-danger black" type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
                         <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
@@ -44,8 +42,6 @@
                     </svg>
                     <?= _t('使用 QQ 登录') ?></button>
             </div> -->
-        </div>
-    </div>
 </div>
 <script>
     document.querySelector('button[type="submit"]').addEventListener('click', function(e) {

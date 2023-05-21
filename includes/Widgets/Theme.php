@@ -59,22 +59,27 @@ class Theme extends Widget
      *
      * @return void
      */
-    private function enable()
+    private function enable($reset = false)
     {
         User::alloc()->pass('administrator');
 
         $name = $this->request->get('name', '');
 
-        // if ($name === $this->theme['name']) {
-        //     Notice::set(['请勿重复启用'], 'warning');
-        //     $this->response->redirect('/admin/theme.php');
-        // }
+        if (!$reset && $name === $this->theme['name']) {
+            Notice::set(['请勿重复启用'], 'warning');
+            $this->response->redirect('/admin/theme.php');
+        }
 
         $class = '\\Themes\\' . $name . '\\Main';
 
         if (!class_exists($class) || !method_exists($class, 'activation')) {
-            Notice::set(['启用失败'], 'warning');
-            // $this->response->goBack('/admin/plugin.php');
+            if ($reset) {
+                Notice::set(['重新启用失败'], 'warning');
+            } else {
+                Notice::set(['启用失败'], 'warning');
+            }
+            $this->response->goBack();
+            return;
         }
 
         // 获取插件设置
@@ -90,7 +95,11 @@ class Theme extends Widget
             'config' => $config,
         ]));
 
-        Notice::set(['启用成功'], 'success');
+        if ($reset) {
+            Notice::set(['重新启用成功'], 'success');
+        } else {
+            Notice::set(['启用成功'], 'success');
+        }
         $this->response->goBack();
     }
 
@@ -106,13 +115,16 @@ class Theme extends Widget
         $name = $this->request->get('name', '');
         if ($name !== $this->theme['name']) {
             Notice::set(['主题未启用'], 'warning');
-            $this->response->redirect('/admin/plugin.php');
+            $this->response->goBack();
+        }
+
+        // 判断插件是否具备配置功能
+        if (count(Option::alloc()->get('theme')['config']) === 0) {
+            Notice::set(['配置功能不存在'], 'warning');
+            $this->response->goBack();
         }
 
         $class = '\\Themes\\' . $name  . '\\Main';
-
-        // 判断插件是否具备配置功能
-        // ----
 
         $renderer = new Renderer();
         call_user_func([$class, 'config'], $renderer);
@@ -126,13 +138,13 @@ class Theme extends Widget
         $name = $this->request->post('name', '');
 
         if (null === $name) {
-            Notice::set(['插件名不能为空'], 'warning');
-            $this->response->redirect('/admin/theme.php');
+            Notice::set(['主题名不能为空'], 'warning');
+            $this->response->goBack();
         }
 
         if ($name !== $this->theme['name']) {
             Notice::set(['主题未启用'], 'warning');
-            $this->response->redirect('/admin/plugin.php');
+            $this->response->goBack();
         }
 
         $data = $this->request->post();
@@ -149,8 +161,10 @@ class Theme extends Widget
 
     public function action()
     {
+        // 启用主题
         $this->on($this->params(0) === 'enable')->enable();
-        $this->on($this->params(0) === 'enable')->enable();
+        // 重置主题
+        $this->on($this->params(0) === 'reset')->enable(true);
         // 更新主题配置
         $this->on($this->params(0) === 'update-config')->updateConfig();
     }
