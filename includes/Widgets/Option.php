@@ -24,9 +24,6 @@ class Option extends Widget
                 $this->options[$index]['value'] = unserialize($this->options[$index]['value']);
             }
         }
-
-        $this->options[] = ['name' => 'themeName', 'value' => $this->get('theme')['name']];
-        $this->options[] = ['name' => 'themeConfig', 'value' => $this->get('theme')['config']];
     }
 
     /**

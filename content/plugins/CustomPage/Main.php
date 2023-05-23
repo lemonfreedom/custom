@@ -1,6 +1,6 @@
 <?php
 
-namespace Plugins\SMTP;
+namespace Plugins\CustomPage;
 
 use Helpers\Renderer;
 
@@ -19,8 +19,8 @@ class Main
      */
     public static function activation()
     {
-        \Custom\Plugin::factory('admin/setting.php')->tab = __CLASS__ . '::renderTab';
-        \Custom\Plugin::factory('admin/setting.php')->content = __CLASS__ . '::renderContent';
+        \Custom\Plugin::factory('admin/navbar.php')->navEnd = __CLASS__ . '::renderNavEnd';
+        \Custom\Plugin::factory('includes/Widgets/Hook.php')->action = __CLASS__ . '::action';
     }
 
     /**
@@ -47,13 +47,20 @@ class Main
         });
     }
 
-    public static function renderTab($config)
+    public static function renderNavEnd($config)
     {
-        include __DIR__ . '/views/tab.php';
+        include __DIR__ . '/views/nav-end.php';
     }
 
     public static function renderContent($config)
     {
         include __DIR__ . '/views/content.php';
+    }
+
+    public static function action($config, $widget)
+    {
+        if ($widget->params(0) === 'custom') {
+            include __DIR__ . '/views/page.php';
+        }
     }
 }

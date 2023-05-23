@@ -37,7 +37,7 @@ class Theme extends Widget
             $class = '\\Themes\\' . $name . '\\Main';
 
             if (class_exists($class)) {
-                $activated = Option::alloc()->get('themeName') === $name;
+                $activated = $this->theme['name'] === $name;
                 $result[] = [
                     'name' => $name,
                     'url' => $class::$url ?? '',
@@ -46,7 +46,7 @@ class Theme extends Widget
                     'author' => $class::$author ?? '',
                     'authorUrl' => $class::$authorUrl ?? '',
                     'activated' => $activated,
-                    'hasConfig' => $activated && count(Option::alloc()->get('themeConfig')) > 0,
+                    'hasConfig' => $activated && count($this->theme['config']) > 0,
                 ];
             }
         }

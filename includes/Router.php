@@ -14,6 +14,7 @@ class Router
         'option' => ['widget' => '\\Widgets\\Option'],
         'plugin' => ['widget' => '\\Widgets\\Plugin'],
         'theme' => ['widget' => '\\Widgets\\Theme'],
+        'hook' => ['widget' => '\\Widgets\\Hook'],
     ];
 
     /**

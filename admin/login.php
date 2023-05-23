@@ -1,3 +1,4 @@
+<?php require __DIR__ . '/modules/init.php'; ?>
 <?php require __DIR__ . '/modules/header.php'; ?>
 <div class="main login mx-auto mt-5">
     <h2 class="my-4 text-center">

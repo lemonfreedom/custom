@@ -147,7 +147,7 @@ class Plugin
             foreach (self::$handles[$name] as $callback) {
                 preg_match('/Plugins\\\(.*)\\\Main/', $callback, $matches);
                 $plugin = $matches[1];
-                call_user_func_array($callback, [$args, self::$plugins[$plugin]['config']]);
+                call_user_func_array($callback, [self::$plugins[$plugin]['config'], ...$args]);
             }
         }
     }

@@ -53,7 +53,7 @@ class Main
      * @param array $config 插件配置
      * @return void
      */
-    public static function render($params, $config)
+    public static function render($config)
     {
         echo $config['message'];
     }
