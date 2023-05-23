@@ -8,7 +8,7 @@
             <hr class="d-lg-none my-2">
             <ul class="navbar-nav me-auto mb-lg-0">
                 <?php \Custom\Plugin::factory('admin/navbar.php')->navBegin() ?>
-                <li class="nav-item dropdown">
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
                             <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z" />
@@ -22,8 +22,8 @@
                         <li><a class="dropdown-item rounded" href="#">文件管理</a></li>
                         <?php \Custom\Plugin::factory('admin/navbar.php')->navContentItem() ?>
                     </ul>
-                </li>
-                <li class="nav-item dropdown">
+                </li> -->
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
                             <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
@@ -38,7 +38,7 @@
                         <li><a class="dropdown-item rounded" href="#">权限管理</a></li>
                         <?php \Custom\Plugin::factory('admin/navbar.php')->navUserItem() ?>
                     </ul>
-                </li>
+                </li> -->
                 <?php \Custom\Plugin::factory('admin/navbar.php')->navEnd() ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -49,7 +49,7 @@
                     </a>
                     <ul class="dropdown-menu shadow-sm p-2">
                         <li><a class="dropdown-item rounded" href="<?= base_url('/admin/setting.php'); ?>">站点设置</a></li>
-                        <li><a class="dropdown-item rounded" href="<?= base_url('/admin/theme.php') ?>">前台管理</a></li>
+                        <li><a class="dropdown-item rounded" href="<?= base_url('/admin/theme.php') ?>">主题管理</a></li>
                         <li><a class="dropdown-item rounded" href="<?= base_url('/admin/plugin.php') ?>">插件管理</a></li>
                         <?php \Custom\Plugin::factory('admin/navbar.php')->navSystemItem() ?>
                     </ul>

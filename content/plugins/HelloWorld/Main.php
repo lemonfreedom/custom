@@ -7,7 +7,7 @@ use Helpers\Renderer;
 class Main
 {
     public static $url = "";
-    public static $description = "描述信息";
+    public static $description = "在底部输出一行文本";
     public static $version = "1.0";
     public static $author = "Noah Zhang";
     public static $authorUrl = "";

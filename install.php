@@ -63,7 +63,7 @@ $db->insert('options', [
     ['name' => 'language', 'value' => 'Chinese'],
     ['name' => 'allowRegister', 'value' => '1'],
     ['name' => 'plugin', 'value' => 'a:0:{}'],
-    ['name' => 'theme', 'value' => 'a:0:{}'],
+    ['name' => 'theme', 'value' => 'a:2:{s:4:"name";s:7:"Classic";s:6:"config";a:1:{s:15:"backgroundColor";s:7:"#ffffff";}}'],
 ]);
 
 $configText = <<<EOT

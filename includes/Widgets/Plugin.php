@@ -67,7 +67,12 @@ class Plugin extends Widget
 
         $name = $this->request->get('name', '');
 
-        if (!$reset && array_key_exists($name, $this->plugins)) {
+        // 如果是重新安装，则先卸载
+        if ($reset) {
+            $this->disable(true);
+        }
+
+        if (array_key_exists($name, $this->plugins)) {
             Notice::set(['请勿重复安装'], 'warning');
             $this->response->goBack();
         }
@@ -111,15 +116,19 @@ class Plugin extends Widget
      *
      * @return void
      */
-    private function disable()
+    private function disable($reset = false)
     {
         User::alloc()->pass('administrator');
 
         $name = $this->request->get('name', '');
 
         if (!array_key_exists($name, $this->plugins)) {
-            Notice::set(['请勿重复卸载'], 'warning');
-            $this->response->goBack();
+            if (!$reset) {
+                Notice::set(['请勿重复卸载'], 'warning');
+                $this->response->goBack();
+            } else {
+                return;
+            }
         }
 
         $class = '\\Plugins\\' . $name . '\\Main';
@@ -133,8 +142,13 @@ class Plugin extends Widget
 
         Option::alloc()->set('plugin', serialize(CustomPlugin::export()));
 
-        Notice::set(['卸载成功'], 'success');
-        $this->response->goBack();
+        if (!$reset) {
+            Notice::set(['卸载成功'], 'success');
+            $this->response->goBack();
+        } else {
+            // 更新启用插件列表
+            $this->plugins = CustomPlugin::export();
+        }
     }
 
     /**
