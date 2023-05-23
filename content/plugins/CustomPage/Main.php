@@ -40,11 +40,11 @@ class Main
      */
     public static function config($renderer)
     {
-        $renderer->setValue('message', 'HelloWorld!');
+        // $renderer->setValue('message', 'HelloWorld!');
 
-        $renderer->setTemplate(function ($data) {
-            include __DIR__ . '/config.php';
-        });
+        // $renderer->setTemplate(function ($data) {
+        //     include __DIR__ . '/config.php';
+        // });
     }
 
     public static function renderNavEnd($config)
